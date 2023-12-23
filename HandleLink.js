@@ -55,7 +55,7 @@ async function Handle(message) {
             .setURL(url)
             .setThumbnail(pfp)
             .setAuthor({ name: `${username} (@${handle})`})
-            .setDescription(textWithoutUrls)
+            .setDescription(textWithoutUrls || null)
             .setImage(mosaicURL || videoURL || null)
             .setTimestamp(date)
             .setFooter({ text: `XFixer by MikanDev`, url: `https://xfixer.mikn.dev/` });

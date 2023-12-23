@@ -17,8 +17,7 @@ async function Handle(message) {
         const retweets = json.retweets;
         const replies = json.replies;
         const media = json.mediaURLs;
-        let text = json.text;
-        text = text.replace(/https:\/\/t\.co\/\w+/g, '');
+        const text = json.text;
         const username = json.user_name;
         const pfp = json.user_profile_image_url;
         const handle = json.user_screen_name;
@@ -46,6 +45,8 @@ async function Handle(message) {
     
         const videoURL = mediaAttachments.length > 0 ? mediaAttachments[0] : null;
         console.log(videoURL);
+
+        const textWithoutUrls = text.replace(/https:\/\/t.co\/[a-zA-Z0-9]+/g, '');
     
         const embed = new EmbedBuilder()
             .setColor('#1DA1F2')
@@ -53,7 +54,7 @@ async function Handle(message) {
             .setURL(url)
             .setThumbnail(pfp)
             .setAuthor({ name: `${username} (@${handle})`})
-            .setDescription(text)
+            .setDescription(textWithoutUrls)
             .setImage(mosaicURL || videoURL || null)
             .setTimestamp(date)
             .setFooter({ text: `XFixer by MikanDev`, url: `https://xfixer.mikn.dev/` });

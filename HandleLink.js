@@ -11,13 +11,14 @@ async function Handle(message) {
     if (response.ok) {
         const json = await response.json();
         const date = new Date(json.date);
+        const qrt = json.qrtURL || null;
         const url = json.tweetURL;
         const id = json.id;
         const likes = json.likes;
         const retweets = json.retweets;
         const replies = json.replies;
         const media = json.mediaURLs;
-        const text = json.text;
+        const text = json.text || null;
         const username = json.user_name;
         const pfp = json.user_profile_image_url;
         const handle = json.user_screen_name;
@@ -61,8 +62,10 @@ async function Handle(message) {
     
         message.reply({ embeds: [embed],  allowedMentions: { repliedUser: false } });
         if (videoURL.startsWith('https://video.twimg.com/')) {
-            message.channel.send(`Attached video:`);
-            message.channel.send(videoURL);
+            message.channel.send(`Attached video:\n${videoURL}`);
+        }
+        if (qrt) {
+            message.channel.send({ embeds: [qrtEmbed] });
         }
     }
 }

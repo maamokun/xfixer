@@ -17,7 +17,8 @@ async function Handle(message) {
         const retweets = json.retweets;
         const replies = json.replies;
         const media = json.mediaURLs;
-        const text = json.text;
+        let text = json.text;
+        text = text.replace(/https:\/\/t\.co\/\w+/g, '');
         const username = json.user_name;
         const pfp = json.user_profile_image_url;
         const handle = json.user_screen_name;

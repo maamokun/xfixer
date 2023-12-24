@@ -36,7 +36,7 @@ async function Handle(message) {
     
         const mediaIDsString = mediaAttachments.join('/');
     
-        let mosaicURL = (`https://mosaic.fxtwitter.com/jpeg/${id}/${mediaIDsString}`);
+        let mosaicURL = (`https://twitter-mosaic.mikandev.tech/jpeg/${id}/${mediaIDsString}`);
 
         console.log(mediaAttachments);
 

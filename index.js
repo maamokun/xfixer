@@ -1,12 +1,14 @@
 import { Client, GatewayIntentBits, ActivityType, EmbedBuilder } from 'discord.js';
 import { config } from 'dotenv';
 import { Handle } from './HandleLink.js';
+import { Translate } from '@google-cloud/translate/build/src/v2';
 
 config();
 
 console.log("aaaaa");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,] });
+const translate = new Translate({ projectId: process.env.PROJECT_ID, key: process.env.GOOGLE_KEY });
 
 client.on ('ready', () => {
     console.log (`Ready on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users`);
@@ -31,5 +33,34 @@ client.on('messageCreate', async (message) => {
       message.reply({ embeds: [embed] });
     }
 });
+
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isButton()) 
+    return;
+  if (interaction.customId === 'delete') {
+    await interaction.message.delete();
+  }
+  if (interaction.customId === 'translate') {
+    let embed = interaction.message.embeds[0];
+    const text = embed.description;
+    const [translated] = await translate.translate(text, 'en');
+
+    console.log(translated);
+
+    const newEmbed = new EmbedBuilder()
+      .setColor('#1DA1F2')
+      .setTitle(embed.title)
+      .setURL(embed.url)
+      .setThumbnail(embed.thumbnail.url)
+      .setAuthor({ name: `Original Post by ${embed.author.name} Translated to English` })
+      .setDescription(`${translated}`)
+      .setImage(embed.image.url)
+      .setFooter({ text: `Powered by Google Translate` });
+
+    await interaction.reply({ embeds: [newEmbed], ephemeral: true });
+  }
+}
+);
+
 
 client.login(process.env.DISCORD_TOKEN);

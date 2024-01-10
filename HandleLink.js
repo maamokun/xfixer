@@ -1,8 +1,24 @@
 import fetch from 'node-fetch'
-import { EmbedBuilder, AttachmentBuilder } from 'discord.js';
-
+import { EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
 
 async function Handle(message) {
+    const deleteButton = new ButtonBuilder()
+    .setCustomId('delete')
+    .setStyle(ButtonStyle.Danger)
+    .setEmoji('<:raidenult:1141299674691670128>');
+
+    const translateButton = new ButtonBuilder()
+        .setCustomId('translate')
+        .setLabel('Translate to English')
+        .setStyle(ButtonStyle.Primary)
+        .setEmoji('🌐');
+
+    const row = new ActionRowBuilder()
+        .addComponents(deleteButton, translateButton);
+
+    const delete_row = new ActionRowBuilder()
+        .addComponents(deleteButton);
+
     const url = message.content;
     const urlParams = url.split('/').slice(3);
     const requestURL = `https://api.vxtwitter.com/${urlParams[0]}/${urlParams[1]}/${urlParams[2]}`;
@@ -60,9 +76,9 @@ async function Handle(message) {
             .setTimestamp(date)
             .setFooter({ text: `XFixer by MikanDev`, url: `https://xfixer.mikn.dev/` });
     
-        message.reply({ embeds: [embed],  allowedMentions: { repliedUser: false } });
+        message.reply({ embeds: [embed], components: [row], allowedMentions: { repliedUser: false } });
         if (videoURL.startsWith('https://video.twimg.com/')) {
-            message.channel.send(`Attached video:\n${videoURL}`);
+            message.channel.send({ content: `Attached video:\n${videoURL}`, components: [delete_row] });
         }
         if (qrt) {
             message.channel.send({ embeds: [qrtEmbed] });

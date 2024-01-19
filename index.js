@@ -19,7 +19,7 @@ client.on('messageCreate', async (message) => {
     if (message.content.startsWith('https://twitter.com/') || message.content.startsWith('https://x.com/')) {
       await Handle(message);
     }
-    if (message.mentions.has(client.user)) {
+    if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}>`)) {
       const embed = new EmbedBuilder()
         .setColor('#1DA1F2')
         .setTitle('XFixer')

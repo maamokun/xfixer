@@ -11,8 +11,11 @@
   "dependencies": {
     "@google-cloud/translate": "^8.0.2",
     "@vitalets/google-translate-api": "^9.2.0",
+    "biome": "^0.3.3",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
-    "http-proxy-agent": "^7.0.0"
+    "http-proxy-agent": "^7.0.0",
+    "quick.db": "^9.1.7",
+    "write-file-atomic": "^5.0.1"
   }
 }

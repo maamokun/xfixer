@@ -56,29 +56,44 @@ async function Handle(message) {
 
         console.log(mediaAttachments);
 
-        if (mediaAttachments.length === 1 && !mediaAttachments[0].startsWith('https://video.twimg.com/')) {
-            mosaicURL = `https://pbs.twimg.com/media/${mediaAttachments[0]}?format=jpg`;
+        if (mediaAttachments.length === 1 || mediaAttachments[0].startsWith('https://video.twimg.com/')) {
+            const statsEmbed = new EmbedBuilder()
+                .setColor('#1DA1F2')
+                .setAuthor({ name: 'Post Stats' })
+                .setTitle(`❤ ` + likes + ` | 🔁 ` + retweets + ` | 💬 ` + replies)
+                .setTimestamp(date)
+                .setFooter({ text: `XFixer by MikanDev`, url: `https://xfixer.mikn.dev/` });
+
+            return message.reply({ embeds: [statsEmbed], components: [row], allowedMentions: { repliedUser: false } });
+        }
+
+        if (mediaAttachments.length === 1 && mediaAttachments[0].startsWith('https://video.twimg.com/')) {
+            const videoURL = mediaAttachments.length > 0 ? mediaAttachments[0] : null;
+            const statsEmbed = new EmbedBuilder()
+                .setColor('#1DA1F2')
+                .setAuthor({ name: 'Post Stats' })
+                .setTitle(`❤ ` + likes + ` | 🔁 ` + retweets + ` | 💬 ` + replies)
+                .setTimestamp(date)
+                .setFooter({ text: `XFixer by MikanDev`, url: `https://xfixer.mikn.dev/` });
+
+            message.reply({ embeds: [statsEmbed], components: [row], allowedMentions: { repliedUser: false } });
+            return message.channel.send({ content: `Attached video:\n${videoURL}`, components: [delete_row] });
         }
     
         const videoURL = mediaAttachments.length > 0 ? mediaAttachments[0] : null;
         console.log(videoURL);
-
-        const textWithoutUrls = text.replace(/https:\/\/t.co\/[a-zA-Z0-9]+/g, '');
     
-        const embed = new EmbedBuilder()
+        const ImageEmbed = new EmbedBuilder()
             .setColor('#1DA1F2')
-            .setTitle(`❤ ` + likes + ` | 🔁 ` + retweets + ` | 💬 ` + replies)
-            .setURL(url)
-            .setThumbnail(pfp)
-            .setAuthor({ name: `${username} (@${handle})`})
-            .setDescription(textWithoutUrls || null)
+            .setTitle(`Stats: ❤ ` + likes + ` | 🔁 ` + retweets + ` | 💬 ` + replies)
+            .setAuthor({ name: `This post contains multiple images.`})
             .setImage(mosaicURL || videoURL || null)
             .setTimestamp(date)
             .setFooter({ text: `XFixer by MikanDev`, url: `https://xfixer.mikn.dev/` });
     
-        message.reply({ embeds: [embed], components: [row], allowedMentions: { repliedUser: false } });
+        message.reply({ embeds: [ImageEmbed], components: [row], allowedMentions: { repliedUser: false } });
         if (videoURL.startsWith('https://video.twimg.com/')) {
-            message.channel.send({ content: `Attached video:\n${videoURL}`, components: [delete_row] });
+            message.reply({ content: `Attached video:\n${videoURL}`, components: [delete_row] });
         }
         if (qrt) {
             message.channel.send({ embeds: [qrtEmbed] });

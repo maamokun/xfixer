@@ -56,6 +56,17 @@ async function Handle(message) {
 
         console.log(mediaAttachments);
 
+        if (mediaAttachments.length === 0) {
+            const statsEmbed = new EmbedBuilder()
+                .setColor('#1DA1F2')
+                .setAuthor({ name: 'Post Stats' })
+                .setTitle(`❤ ` + likes + ` | 🔁 ` + retweets + ` | 💬 ` + replies)
+                .setTimestamp(date)
+                .setFooter({ text: `XFixer by MikanDev`, url: `https://xfixer.mikn.dev/` });
+
+            return message.reply({ embeds: [statsEmbed], components: [row], allowedMentions: { repliedUser: false } });
+        }
+
         if (mediaAttachments.length === 1 || mediaAttachments[0].startsWith('https://video.twimg.com/')) {
             const statsEmbed = new EmbedBuilder()
                 .setColor('#1DA1F2')

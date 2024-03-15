@@ -67,7 +67,7 @@ async function Handle(message) {
             return message.reply({ embeds: [statsEmbed], components: [row], allowedMentions: { repliedUser: false } });
         }
 
-        if (mediaAttachments.length === 1 || mediaAttachments[0].startsWith('https://video.twimg.com/')) {
+        if (mediaAttachments.length === 1 && !mediaAttachments[0].startsWith('https://video.twimg.com/')) {
             const statsEmbed = new EmbedBuilder()
                 .setColor('#1DA1F2')
                 .setAuthor({ name: 'Post Stats' })

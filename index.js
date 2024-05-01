@@ -62,6 +62,7 @@ client.on('messageCreate', async (message) => {
       const response = await fetch(emojiURL);
       const arrayBuffer = await response.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
+      console.log(buffer);
       await message.guild.emojis.create(buffer, emojiname);
       message.reply({ content: `Successfully added ${emojiname} to this server!` });
       }

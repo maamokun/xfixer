@@ -37,7 +37,7 @@ client.on('messageCreate', async (message) => {
     }
     if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}> steal`)) {
       try{ 
-      const emoji = message.content.split(' ')[3];
+      const emoji = message.content.split(' ')[2];
       console.log(emoji);
       const emojiID = emoji.split(':')[2].replace('>', '');
       const emojiname = emoji.split(':')[1];
@@ -52,7 +52,7 @@ client.on('messageCreate', async (message) => {
     }
     if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}> asteal`)) {
       try{ 
-      const emoji = message.content.split(' ')[3];
+      const emoji = message.content.split(' ')[2];
       console.log(emoji);
       const emojiID = emoji.split(':')[2].replace('>', '');
       const emojiname = emoji.split(':')[1];

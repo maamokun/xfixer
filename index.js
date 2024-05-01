@@ -38,6 +38,7 @@ client.on('messageCreate', async (message) => {
     if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}> steal`)) {
       try{ 
       const emoji = message.content.split(' ')[3];
+      console.log(emoji);
       const emojiID = emoji.split(':')[2].replace('>', '');
       const emojiname = emoji.split(':')[1];
       const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.png`;
@@ -52,6 +53,7 @@ client.on('messageCreate', async (message) => {
     if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}> asteal`)) {
       try{ 
       const emoji = message.content.split(' ')[3];
+      console.log(emoji);
       const emojiID = emoji.split(':')[2].replace('>', '');
       const emojiname = emoji.split(':')[1];
       const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.gif`;

@@ -46,6 +46,7 @@ client.on('messageCreate', async (message) => {
       }
       catch (error) {
         message.reply({ content: 'Error adding emoji. Make sure you mention the emoji correctly.' });
+        console.log(error);
       }
     }
     if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}> asteal`)) {
@@ -59,6 +60,7 @@ client.on('messageCreate', async (message) => {
       }
       catch (error) {
         message.reply({ content: 'Error adding emoji. Make sure you mention the emoji correctly.' });
+        console.log(error);
       }
     }});
 

@@ -43,7 +43,8 @@ client.on('messageCreate', async (message) => {
       const emojiname = emoji.split(':')[1];
       const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.png`;
       const response = await fetch(emojiURL);
-      await message.guild.emojis.create(response, emojiname);
+      const buffer = await response.buffer();
+      await message.guild.emojis.create(buffer, emojiname);
       message.reply({ content: `Successfully added ${emojiname} to this server!` });
       }
       catch (error) {
@@ -59,8 +60,9 @@ client.on('messageCreate', async (message) => {
       const emojiname = emoji.split(':')[1];
       const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.gif`;
       const response = await fetch(emojiURL);
-      const fileBuffer = Buffer.from(await response.arrayBuffer());
-      await message.guild.emojis.create(fileBuffer, emojiname);
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      await message.guild.emojis.create(buffer, emojiname);
       message.reply({ content: `Successfully added ${emojiname} to this server!` });
       }
       catch (error) {

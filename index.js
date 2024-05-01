@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, ActivityType, EmbedBuilder, StringSelectMenuBuilder, ActionRowBuilder } from 'discord.js';
+import { Client, GatewayIntentBits, ActivityType, EmbedBuilder, AttachmentBuilder, StringSelectMenuBuilder, ActionRowBuilder } from 'discord.js';
 import { deploy } from './deploy_commands.js';
 import { config } from 'dotenv';
 import { Handle } from './HandleLink.js';
@@ -43,8 +43,8 @@ client.on('messageCreate', async (message) => {
       const emojiname = emoji.split(':')[1];
       const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.png`;
       const response = await fetch(emojiURL);
-      const buffer = await response.buffer();
-      await message.guild.emojis.create(buffer.toString, emojiname);
+      const attachment = new AttachmentBuilder(response.body, 'emoji.png');
+      await message.guild.emojis.create(attachment, emojiname);
       message.reply({ content: `Successfully added ${emojiname} to this server!` });
       }
       catch (error) {
@@ -60,10 +60,8 @@ client.on('messageCreate', async (message) => {
       const emojiname = emoji.split(':')[1];
       const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.gif`;
       const response = await fetch(emojiURL);
-      const arrayBuffer = await response.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      console.log(buffer);
-      await message.guild.emojis.create(buffer.toString, emojiname);
+      const attachment = new AttachmentBuilder(response.body, 'emoji.gif');
+      await message.guild.emojis.create(attachment, emojiname);
       message.reply({ content: `Successfully added ${emojiname} to this server!` });
       }
       catch (error) {

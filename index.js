@@ -22,7 +22,7 @@ client.on('messageCreate', async (message) => {
     if (message.content.startsWith('https://twitter.com/') || message.content.startsWith('https://x.com/')) {
       await Handle(message);
     }
-    if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}>`)) {
+    if (message.mentions.has(client.user) && message.content == (`<@${client.user.id}>`)) {
       const embed = new EmbedBuilder()
         .setColor('#1DA1F2')
         .setTitle('XFixer')
@@ -35,7 +35,32 @@ client.on('messageCreate', async (message) => {
         .setFooter({ text: 'XFixer by MikanDev' });
       message.reply({ embeds: [embed] });
     }
-});
+    if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}> steal`)) {
+      try{ 
+      const emoji = message.content.split(' ')[3];
+      const emojiID = emoji.split(':')[2].replace('>', '');
+      const emojiname = emoji.split(':')[1];
+      const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.png`;
+      await client.guilds.cache.get(message.guild).emojis.create(emojiURL, emojiname);
+      message.reply({ content: `Successfully added ${emojiname} to this server!` });
+      }
+      catch (error) {
+        message.reply({ content: 'Error adding emoji. Make sure you mention the emoji correctly.' });
+      }
+    }
+    if (message.mentions.has(client.user) && message.content.includes(`<@${client.user.id}> asteal`)) {
+      try{ 
+      const emoji = message.content.split(' ')[3];
+      const emojiID = emoji.split(':')[2].replace('>', '');
+      const emojiname = emoji.split(':')[1];
+      const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.gif`;
+      await client.guilds.cache.get(message.guild).emojis.create(emojiURL, emojiname);
+      message.reply({ content: `Successfully added ${emojiname} to this server!` });
+      }
+      catch (error) {
+        message.reply({ content: 'Error adding emoji. Make sure you mention the emoji correctly.' });
+      }
+    }});
 
 client.on('interactionCreate', async (interaction) => {
   if (interaction.customId === 'delete') {

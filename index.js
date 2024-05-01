@@ -41,7 +41,7 @@ client.on('messageCreate', async (message) => {
       console.log(emoji);
       const emojiID = emoji.split(':')[2].replace('>', '');
       const emojiname = emoji.split(':')[1];
-      const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.png`;
+      const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.png?size=128`;
       const response = await fetch(emojiURL);
       const attachment = new AttachmentBuilder(response.body, 'emoji.png');
       const roles = message.guild.roles.cache.filter(role => role.managed === false);
@@ -60,7 +60,7 @@ client.on('messageCreate', async (message) => {
       const emojiID = emoji.split(':')[2].replace('>', '');
       const emojiname = emoji.split(':')[1];
       console.log(emojiname);
-      const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.gif`;
+      const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.gif?size=128`;
       const response = await fetch(emojiURL);
       const attachment = new AttachmentBuilder(response.body, 'emoji.gif');
       const roles = message.guild.roles.cache.filter(role => role.managed === false);

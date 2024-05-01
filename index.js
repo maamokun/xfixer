@@ -58,6 +58,7 @@ client.on('messageCreate', async (message) => {
       console.log(emoji);
       const emojiID = emoji.split(':')[2].replace('>', '');
       const emojiname = emoji.split(':')[1];
+      console.log(emojiname);
       const emojiURL = `https://cdn.discordapp.com/emojis/${emojiID}.gif`;
       const response = await fetch(emojiURL);
       const attachment = new AttachmentBuilder(response.body, 'emoji.gif');
